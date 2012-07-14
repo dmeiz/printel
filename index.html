@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <script src='raphael-min.js'></script>
+  </head>
+  <body>
+  </body>
+  <script>
+    var r = Raphael(0, 0, 800, 800);
+
+    var dragger = function () {
+        this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
+        this.oy = this.type == "rect" ? this.attr("y") : this.attr("cy");
+    },
+        move = function (dx, dy) {
+            var att = this.type == "rect" ? {x: this.ox + dx, y: this.oy + dy} : {cx: this.ox + dx, cy: this.oy + dy};
+            this.attr(att);
+            r.safari();
+        },
+        up = function () {
+        };
+
+
+    var widgets = [
+      {name: 'Car', x: 10, y: 10},
+      {name: 'Wheel', x: 200, y: 200}
+    ];
+
+    var relations = [
+      {from: widgets[0], to: widgets[1]}
+    ];
+
+    for (var i = 0; i < widgets.length; i++) {
+      var widget = widgets[i];
+      rect = r.rect(widget.x, widget.y, 60, 40);
+      r.text(widget.x + 30, widget.y + 20, widget.name);
+      //rect.drag(move, dragger, up);
+    }
+
+    for (var i = 0; i < relations.length; i++) {
+      var relation = relations[i];
+      r.path('M' + relation.from.x + ',' + relation.from.y + 'L' + relation.to.x + ',' + relation.to.y);
+    }
+
+    /*
+    // Creates circle at x = 50, y = 40, with radius 10
+    // Sets the fill attribute of the circle to red (#f00)
+    circle.attr("fill", "#f00");
+
+    // Sets the stroke attribute of the circle to white
+    circle.attr("stroke", "#fff");
+    */
+  </script>
+<html>
