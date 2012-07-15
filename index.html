@@ -33,7 +33,7 @@
       var widget = widgets[i];
       rect = r.rect(widget.x, widget.y, 60, 40);
       r.text(widget.x + 30, widget.y + 20, widget.name);
-      //rect.drag(move, dragger, up);
+      rect.drag(move, dragger, up);
     }
 
     for (var i = 0; i < relations.length; i++) {
