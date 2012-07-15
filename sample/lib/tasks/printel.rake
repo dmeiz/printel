@@ -33,17 +33,12 @@
   #   #    [User] 1-*> [Ownership]
   #   #    [User] 1-*> [Subscription]
   #   #    [User] 1-*> [WebHook]"
-require 'rails_erd/diagram'
-
-class PrintelDiagram < RailsERD::Diagram
-  each_relationship do |relationship|
-    puts relationship.source
-    puts relationship.cardinality.name
-    puts relationship.destination
-  end
-end 
+$: << '../lib'
+require 'printel'
 
 desc 'Generate printel data'
 task :printel => ['erd:load_models'] do
+
+
   PrintelDiagram.create
 end
