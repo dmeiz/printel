@@ -38,7 +38,9 @@ require 'printel'
 
 desc 'Generate printel data'
 task :printel => ['erd:load_models'] do
+  puts 'printel.rake: Deleting model data'
+  Printel::Model.delete
+  Printel::Relationship.delete
 
-
-  PrintelDiagram.create
+  Printel::Diagram.create
 end

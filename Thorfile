@@ -8,23 +8,24 @@ class Printel < Thor
     FileUtils.rm_f('sample/printel.db')
 
     DB.create_table(:models) do
-      Integer :id
+      primary_key :id
       String :name
     end
 
     DB.create_table(:relationships) do
-      Integer :id
-      Integer :model_id
+      primary_key :id
+      Integer :source_id
+      Integer :destination_id
       String :type
     end
 
     DB.create_table(:drawings) do
-      Integer :id
+      primary_key :id
       String :name
     end
 
     DB.create_table(:model_widgets) do
-      Integer :id
+      primary_key :id
       Integer :drawing_id
       Integer :model_id
       Integer :x
