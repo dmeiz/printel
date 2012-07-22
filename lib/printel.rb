@@ -2,6 +2,7 @@ require "printel/version"
 require 'rails_erd/diagram'
 require 'sequel'
 require 'sqlite3'
+require 'sinatra/base'
 
 DB = Sequel.connect('sqlite:///Users/dhensgen/src/printel/sample/printel.db')
 
@@ -25,5 +26,11 @@ module Printel
       Relationship.create(:source => source, :destination => destination, :type => relationship.cardinality.name)
     end
   end 
+
+  class Server < Sinatra::Base
+    get '/' do
+      'Hello from Printel!'
+    end
+  end
 end
 

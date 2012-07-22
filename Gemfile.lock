@@ -19,6 +19,7 @@ GEM
     linecache (0.46)
       rbx-require-relative (> 0.0.4)
     multi_json (1.3.6)
+    rack (1.4.1)
     rails-erd (0.4.5)
       activerecord (~> 3.0)
       activesupport (~> 3.0)
@@ -31,7 +32,11 @@ GEM
       linecache (>= 0.3)
     ruby-graphviz (0.9.21)
     sequel (3.37.0)
+    sinatra (1.2.7)
+      rack (~> 1.1)
+      tilt (>= 1.2.2, < 2.0)
     sqlite3 (1.3.6)
+    tilt (1.3.3)
     tzinfo (0.3.33)
 
 PLATFORMS
@@ -41,4 +46,5 @@ DEPENDENCIES
   rails-erd
   ruby-debug
   sequel
+  sinatra
   sqlite3
