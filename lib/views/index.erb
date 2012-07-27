@@ -1,0 +1,9 @@
+There are <%= Printel::Drawing.count %> drawings.<br/>
+<% @drawings.each do |drawing| %>
+  <a href='/drawings/<%= drawing.id %>/edit'><%= drawing.name %></a><br/>
+<% end %>
+
+<form action='/drawings' method='post'>
+  NAME: <input name='name'/><br/>
+  <input type='submit'/>
+</form>
