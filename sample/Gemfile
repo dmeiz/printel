@@ -33,3 +33,5 @@ gem 'jquery-rails'
 
 gem 'rails-erd'
 gem 'sequel'
+gem 'sinatra'
+gem 'sinatra-contrib'
