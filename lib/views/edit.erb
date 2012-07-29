@@ -8,7 +8,63 @@
   <%= model.name %><br/>
 <% end %>
 <script>
+  /*
   $(document).ready(function() {
     alert('hello');
   });
+  */
+    var r = Raphael(100, 100, 500, 500);
+    r.rect(0, 0, 500, 500);
+
+/*
+    var dragger = function () {
+        this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
+        this.oy = this.type == "rect" ? this.attr("y") : this.attr("cy");
+    },
+        move = function (dx, dy) {
+            var att = this.type == "rect" ? {x: this.ox + dx, y: this.oy + dy} : {cx: this.ox + dx, cy: this.oy + dy};
+            this.attr(att);
+            r.safari();
+        },
+        up = function () {
+        };
+
+
+    var widgets = [
+      {name: 'Car', x: 10, y: 10},
+      {name: 'Wheel', x: 200, y: 200}
+    ];
+
+    var relations = [
+      {from: widgets[0], to: widgets[1]}
+    ];
+
+    for (var i = 0; i < widgets.length; i++) {
+      var widget = widgets[i];
+      rect = r.rect(widget.x, widget.y, 60, 40);
+      r.text(widget.x + 30, widget.y + 20, widget.name);
+      rect.drag(move, dragger, up);
+    }
+
+    for (var i = 0; i < relations.length; i++) {
+      var relation = relations[i];
+      r.path('M' + relation.from.x + ',' + relation.from.y + 'L' + relation.to.x + ',' + relation.to.y);
+    }
+*/
+
+    /*
+    // Creates circle at x = 50, y = 40, with radius 10
+    // Sets the fill attribute of the circle to red (#f00)
+    circle.attr("fill", "#f00");
+
+    // Sets the stroke attribute of the circle to white
+    circle.attr("stroke", "#fff");
+    */
+
+    window.box_attrs = {x: 10, y: 20, width:10, height: 10};
+    window.box = r.rect().attr(box_attrs);
+    window.box.attr(box_attrs);
+
+    path_attrs = [['M', 10, 10], ['L', 100, 100]];
+    var path = r.path(path_attrs);
 </script>
