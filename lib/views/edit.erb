@@ -1,19 +1,35 @@
-<p>
-  <a href='/'>Drawings</a>
-</p>
-<p>
-  Editing <%= @drawing.name %><br/>
-</p>
-<% @models.each do |model| %>
-  <%= model.name %><br/>
-<% end %>
+<style>
+  #controls {
+    background-color: #eee;
+    float: left;
+    width: 25%;
+  }
+
+  #drawing {
+    float: left;
+    width: 75%;
+  }
+</style>
+<div id='controls'>
+  <p>
+    <a href='/'>Drawings</a>
+  </p>
+  <p>
+    Editing <%= @drawing.name %><br/>
+  </p>
+  <% @models.each do |model| %>
+    <%= model.name %><br/>
+  <% end %>
+</div>
+<div id='drawing'>
+</div>
 <script>
   /*
   $(document).ready(function() {
     alert('hello');
   });
   */
-    var r = Raphael(100, 100, 500, 500);
+    var r = Raphael($('#drawing').offset().left, 0, 500, 500);
     r.rect(0, 0, 500, 500);
 
 /*
