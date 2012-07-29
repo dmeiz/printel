@@ -9,17 +9,29 @@
     float: left;
     width: 75%;
   }
+
+  .flash {
+    background-color: green;
+  }
 </style>
 <div id='controls'>
+  <% if flash = session.delete(:flash) %>
+    <p class='flash'><%= flash %></p>
+  <% end %>
   <p>
     <a href='/'>Drawings</a>
   </p>
   <p>
     Editing <%= @drawing.name %><br/>
   </p>
+  <h3>Models</h3>
   <% @models.each do |model| %>
     <%= model.name %><br/>
   <% end %>
+  <form action='/drawings/<%= @drawing.id %>' method='post'>
+    <input name='name' value='<%= @drawing.name %>'/><br/>
+    <input type='submit' name='Save'/>
+  </form>
 </div>
 <div id='drawing'>
 </div>
