@@ -53,16 +53,20 @@
     console.log('Adding model with id ' + $(ev.target).attr('data-model-id'));
 
     model = models[$(ev.target).attr('data-model-id')];
-     
-    model_widget = {
-      model: model,
-      x: 60,
-      y: 40,
-      graphic: r.set(
-        r.rect(60, 40, 60, 40),
-        r.text(60 + 30, 40 + 20, model.name)
-      )
-    };
+
+    if (!_.any(model_widgets, function(model_widget) {return model_widget.model == model})) {
+      model_widget = {
+        model: model,
+        x: 60,
+        y: 40,
+        graphic: r.set(
+          r.rect(60, 40, 60, 40),
+          r.text(60 + 30, 40 + 20, model.name)
+        )
+      };
+
+      model_widgets.push(model_widget);
+    }
   });
   /*
   $(document).ready(function() {
