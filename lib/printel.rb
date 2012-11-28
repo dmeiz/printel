@@ -19,6 +19,10 @@ module Printel
   end
 
   class Drawing < Sequel::Model
+    one_to_many :model_widgets
+  end
+
+  class ModelWidget < Sequel::Model
   end
 
   class Diagram < RailsERD::Diagram
@@ -56,6 +60,13 @@ module Printel
 #      @drawing.remove_all_model_widgets
 #      data = JSON.parse(params[:data])
       @drawing.name = params[:name]
+      @drawing.model_widgets_dataset.delete
+      drawing = JSON.parse(params[:drawing])
+      puts drawing.inspect
+      drawing['model_widgets'].each do |model_widget|
+
+        puts @drawing.add_model_widget(ModelWidget.create(:model_id => model_widget['model_id'], :x => model_widget['x'], :y => model_widget['y'])).inspect
+      end
       @drawing.save
       session[:flash] = "Saved #{@drawing.name}"
       redirect to("/drawings/#{@drawing.id}/edit")

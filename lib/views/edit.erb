@@ -15,6 +15,7 @@
   }
 </style>
 <div id='controls'>
+  <p class='flash'></p>
   <% if flash = session.delete(:flash) %>
     <p class='flash'><%= flash %></p>
   <% end %>
@@ -33,7 +34,7 @@
     <% end %>
   </ul>
   <form action='/drawings/<%= @drawing.id %>' method='post'>
-    <input name='name' value='<%= @drawing.name %>'/><br/>
+    <input id=name name='name' value='<%= @drawing.name %>'/><br/>
     <input type='submit' name='Save'/>
   </form>
 </div>
@@ -60,13 +61,25 @@
         x: 60,
         y: 40,
         graphic: r.set(
-          r.rect(60, 40, 60, 40),
+          r.rect(60, 40, 60, 40).attr({fill: 'white'}),
           r.text(60 + 30, 40 + 20, model.name)
         )
       };
 
       model_widgets.push(model_widget);
     }
+  });
+
+  $('form').submit(function(ev) {
+    ev.preventDefault();
+    var data = {
+      name: $('#name').val(),
+      model_widgets: _.map(model_widgets, function(model_widget) { return {model_id: model_widget.model.id, x: model_widget.x, y: model_widget.y}})
+    };
+    console.log(data);
+    $.post('/drawings/<%= @drawing.id %>', {drawing: JSON.stringify(data)}, function(data) {
+      $('.flash').text('Saved!');
+    });
   });
   /*
   $(document).ready(function() {
