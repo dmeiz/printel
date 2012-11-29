@@ -54,6 +54,18 @@
     <% end %>
   };
 
+  function start(x, y, ev) {
+      this.ox = this.attr('x');
+      this.oy = this.attr('y');
+  }
+
+  function move(dx, dy, x, y, ev) {
+      this.data('set').attr({
+          x: this.ox + dx,
+          y: this.oy + dy
+      });
+  }
+
   var model_widgets = [];
 
   $('.model').click(function(ev) {
@@ -102,6 +114,8 @@
           r.text(mw.x + 30, mw.y + 20, model.name)
         )
       };
+      model_widget.graphic[0].data('set', model_widget.graphic)
+      model_widget.graphic[0].drag(move, start);
 
       model_widgets.push(model_widget);
     });
