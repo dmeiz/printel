@@ -19,10 +19,12 @@ module Printel
   end
 
   class Drawing < Sequel::Model
+    plugin :json_serializer
     one_to_many :model_widgets
   end
 
   class ModelWidget < Sequel::Model
+    plugin :json_serializer
   end
 
   class Diagram < RailsERD::Diagram
@@ -49,6 +51,10 @@ module Printel
       redirect to('/')
     end
 
+    get '/drawings/:id' do
+      Drawing[params[:id]].to_json(:include => :model_widgets)
+    end
+
     get '/drawings/:id/edit' do
       @models = Model.all
       @drawing = Drawing[params[:id]]
@@ -67,6 +73,7 @@ module Printel
 
         puts @drawing.add_model_widget(ModelWidget.create(:model_id => model_widget['model_id'], :x => model_widget['x'], :y => model_widget['y'])).inspect
       end
+      @drawing.name = drawing['name']
       @drawing.save
       session[:flash] = "Saved #{@drawing.name}"
       redirect to("/drawings/#{@drawing.id}/edit")
