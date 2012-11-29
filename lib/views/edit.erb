@@ -41,13 +41,19 @@
 <div id='drawing'>
 </div>
 <script>
+  // draw bounding box
+  //
   var r = Raphael($('#drawing').offset().left, 0, 500, 500);
   r.rect(0, 0, 500, 500);
+
+  // define available models
+  //
   var models = {
     <% @models.each do |model| %>
       '<%= model.id %>': {id: '<%= model.id %>', name: '<%= model.name %>'},
     <% end %>
   };
+
   var model_widgets = [];
 
   $('.model').click(function(ev) {
@@ -81,6 +87,25 @@
       $('.flash').text('Saved!');
     });
   });
+
+  // display drawing
+  //
+  $.get('/drawings/' + <%= @drawing.id %> + '.json', function(data) {
+    _.each(data.model_widgets, function(mw) {
+      model = models[mw.model_id];
+      model_widget = {
+        model: model,
+        x: mw.x,
+        y: mw.y,
+        graphic: r.set(
+          r.rect(mw.x, mw.y, 60, 40).attr({fill: 'white'}),
+          r.text(mw.x + 30, mw.y + 20, model.name)
+        )
+      };
+
+      model_widgets.push(model_widget);
+    });
+  }, 'json')
   /*
   $(document).ready(function() {
     alert('hello');

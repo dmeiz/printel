@@ -51,7 +51,7 @@ module Printel
       redirect to('/')
     end
 
-    get '/drawings/:id' do
+    get '/drawings/:id.json' do
       Drawing[params[:id]].to_json(:include => :model_widgets)
     end
 
