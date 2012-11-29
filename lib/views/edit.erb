@@ -50,9 +50,26 @@
   //
   var models = {
     <% @models.each do |model| %>
-      '<%= model.id %>': {id: '<%= model.id %>', name: '<%= model.name %>'},
+      '<%= model.id %>': {id: '<%= model.id %>', name: '<%= model.name %>', relationships: []},
     <% end %>
   };
+
+  // define relationships
+  //
+  var relationships = [
+    <% @relationships.each do |relationship| %>
+      {source_model_id: '<%= relationship.source.id %>', destination_model_id: '<%= relationship.destination.id %>', type: '<%= relationship[:type] %>'},
+    <% end %>
+  ];
+
+  // wire up relationships
+  //
+  _.each(relationships, function(relationship) {
+    relationship.source = models[relationship.source_model_id];
+    relationship.destination = models[relationship.destination_model_id];
+    relationship.source.relationships.push(relationship);
+    relationship.destination.relationships.push(relationship);
+  });
 
   function start(x, y, ev) {
       this.ox = this.attr('x');

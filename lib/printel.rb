@@ -29,7 +29,7 @@ module Printel
 
   class Diagram < RailsERD::Diagram
     each_relationship do |relationship|
-      puts relationship.source, relationship.cardinality.name, relationship.destination
+      puts [relationship.source, relationship.cardinality.name, relationship.destination].join(' ')
 
       source = Model.find_or_create(:name => relationship.source.name)
       destination = Model.find_or_create(:name => relationship.destination.name)
@@ -57,6 +57,7 @@ module Printel
 
     get '/drawings/:id/edit' do
       @models = Model.all
+      @relationships = Relationship.all
       @drawing = Drawing[params[:id]]
       erb :edit
     end
