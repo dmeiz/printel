@@ -143,7 +143,7 @@
     ev.preventDefault();
     var data = {
       name: $('#name').val(),
-      model_widgets: _.map(model_widgets, function(model_widget) { return {model_id: model_widget.model.id, x: model_widget.x, y: model_widget.y}})
+      model_widgets: _.map(model_widgets, function(model_widget) { return {model_id: model_widget.model.id, x: model_widget.graphic[0].attr('x'), y: model_widget.graphic[0].attr('y')}})
     };
     console.log(data);
     $.post('/drawings/<%= @drawing.id %>', {drawing: JSON.stringify(data)}, function(data) {
