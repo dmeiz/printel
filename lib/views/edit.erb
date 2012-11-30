@@ -71,6 +71,36 @@
     relationship.destination.relationships.push(relationship);
   });
 
+  function centerOf(element) {
+    return [element.attr('x') + element.attr('width') / 2, element.attr('y') + element.attr('height') / 2];
+  }
+
+  function modelWidgetForModel(model) {
+    return _.find(model_widgets, function(model_widget) {return model_widget.model == model});
+  }
+
+  function otherModel(model, relationship) {
+    if (relationship.source == model) {
+      return relationship.destination;
+    }
+    else {
+      return relationship.source;
+    }
+  }
+
+  function addRelationships(model_widget) {
+    var srcCenter = centerOf(model_widget.graphic[0]);
+    _.each(model_widget.model.relationships, function(relationship) {
+      om = otherModel(model_widget.model, relationship);
+      modelWidget = modelWidgetForModel(om);
+      console.log(modelWidget);
+      if (modelWidget) {
+        var destCenter = centerOf(modelWidget.graphic[0]);
+        path = r.path("M" + srcCenter[0] + ',' + srcCenter[1] + 'L' + destCenter[0] + ',' + destCenter[1])
+      }
+    });
+  }
+
   function start(x, y, ev) {
       this.ox = this.attr('x');
       this.oy = this.attr('y');
@@ -84,6 +114,7 @@
   }
 
   var model_widgets = [];
+  var relationship_widgets = [];
 
   $('.model').click(function(ev) {
     console.log('Adding model with id ' + $(ev.target).attr('data-model-id'));
@@ -100,6 +131,9 @@
           r.text(60 + 30, 40 + 20, model.name)
         )
       };
+      model_widget.graphic[0].data('set', model_widget.graphic)
+      model_widget.graphic[0].drag(move, start);
+      addRelationships(model_widget);
 
       model_widgets.push(model_widget);
     }
@@ -133,6 +167,7 @@
       };
       model_widget.graphic[0].data('set', model_widget.graphic)
       model_widget.graphic[0].drag(move, start);
+      addRelationships(model_widget);
 
       model_widgets.push(model_widget);
     });
