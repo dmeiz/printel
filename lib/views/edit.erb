@@ -13,6 +13,14 @@
   .flash {
     background-color: green;
   }
+
+  #menu {
+    position: absolute;
+    left: 10;
+    top: 10;
+    background: yellow;
+    z-index: 1;
+  }
 </style>
 <div id='controls'>
   <p class='flash'></p>
@@ -39,6 +47,9 @@
   </form>
 </div>
 <div id='drawing'>
+<div id='menu' style='display:none'>
+  <a href='#' id='delete'>Delete</a>
+</div>
 </div>
 <script>
   // draw bounding box
@@ -139,6 +150,10 @@
     }
   });
 
+  function deleteModelWidget(modelWidget) {
+    modelWidget.data('set').remove();
+  }
+
   $('form').submit(function(ev) {
     ev.preventDefault();
     var data = {
@@ -149,6 +164,12 @@
     $.post('/drawings/<%= @drawing.id %>', {drawing: JSON.stringify(data)}, function(data) {
       $('.flash').text('Saved!');
     });
+  });
+
+  $('#menu a').click(function(ev) {
+    ev.preventDefault();
+    deleteModelWidget($(ev.target).data('model_widget'));
+    $('#menu').hide();
   });
 
   // display drawing
@@ -167,6 +188,10 @@
       };
       model_widget.graphic[0].data('set', model_widget.graphic)
       model_widget.graphic[0].drag(move, start);
+      model_widget.graphic[0].click(function(ev) {
+        $('#menu a').data('model_widget', this)
+        $('#menu').css({left: ev.x, top: ev.y}).show();
+      });
       addRelationships(model_widget);
 
       model_widgets.push(model_widget);
